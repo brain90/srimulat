@@ -12,10 +12,6 @@ class WhatsappChatParser(object):
       chatFile = open(self.chatFile, 'r')
       cleanFile = open("cleanFile.txt","w")
 
-      # Move pointer to 3rd line
-      #for i in xrange(23):
-      #  chatFile.next()
-
       lineBuffer = ""
       counter = 0
       for line in chatFile:
