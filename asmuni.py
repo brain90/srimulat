@@ -1,38 +1,43 @@
 import re
 import sys
-import sqlite3
-from datetime import datetime
 from dateutil import parser
 
 class Asmuni(object):
 
-    currentNextLine = ""
-
-    def __init__(self, chatFile):
-        self.chatFile = chatFile
+    def __init__(self):
+        self.chatFile = open(sys.argv[1], 'r')
+        self.cleanFile = open("cleanFile.txt","w")
+        self.currentNextLine = ""
+        self.counter = 1
 
     def process(self):
-        chatFile = open(self.chatFile, 'r')
-        cleanFile = open("cleanFile.txt","w")
-
+        header = "copy srimulat (date, sender, content) from stdin;\n"
+        self.write(header)
         lineBuffer = ""
-        for line in chatFile:
-            line = self.lineCleaner(line) 
-            lineBuffer = line
+        for line in self.chatFile:
+            lineBuffer = self.lineCleaner(line)
             if (self.isRecord(line)):
-                while (self.nextLineIsRecord(chatFile) == False):
+                while (self.nextLineIsRecord() == False):
                     lineBuffer += self.lineCleaner(self.currentNextLine)
-                cleanFile.write(self.recordParser(lineBuffer))
-                cleanFile.write(self.recordParser(self.lineCleaner(self.currentNextLine)))
+                self.write(self.recordParser(lineBuffer))
+                self.write(self.recordParser(self.lineCleaner(self.currentNextLine)))
             lineBuffer = ""
-        cleanFile.close()
-        print "done"
-    
+        self.write("\.\n")
+        self.cleanFile.close()
+        self.chatFile.close()
+        print "\ndone"
+
+    def write(self, cleanLine):
+        self.cleanFile.write(cleanLine)
+        sys.stdout.write("Processing %d line \r" % (self.counter))
+        sys.stdout.flush()
+        self.counter += 1
+        
     def lineCleaner(self, line):
         return line.strip().replace("\r","")
 
-    def nextLineIsRecord(self, chatFile):
-        self.currentNextLine = next(chatFile)
+    def nextLineIsRecord(self):
+        self.currentNextLine = next(self.chatFile)
         return self.isRecord(self.currentNextLine) 
         
     def isRecord(self, line):
@@ -45,27 +50,11 @@ class Asmuni(object):
         msg_date, sep, msg = line.partition(" - ")
         sender, sep, content = msg.partition(": ")
         patternNonAscii = re.compile(r'[^\x00-\x7F]+')
-
         contentWithoutNonAscii = patternNonAscii.sub('',content)  
         cleanContent = ' '.join(contentWithoutNonAscii.split()) 
-        
+        if (cleanContent.strip() == ''): cleanContent = '\N'
         return parser.parse(msg_date).strftime("%Y-%m-%d %H:%M") + "\t" + \
                sender + "\t" + cleanContent + "\n"
 
-        #return "INSERT INTO srimulat (date, sender, content) VALUES ('" + \
-        #        parser.parse(msg_date).strftime("%Y-%m-%d %H:%M") + "',$$" + \
-        #        sender + "$$,$$ " + cleanContent + " $$);\n"
-    
-
-    def recordParser2(self, line):
-        msg_date, sep, msg = line.partition(" - ")
-        sender, sep, content = msg.partition(": ")
-        re.sub(r'[^\x00-\x7F]+','', content)
-        return "INSERT INTO srimulat " + \
-                "VALUES " + \
-                "('" + parser.parse(msg_date).strftime("%Y-%m-%d %H:%M") + "',$$" + \
-                sender + \
-                "$$,$$" + content.replace('\r','') + " $$);\n";
-
-Asmuni = Asmuni('b.txt');
+Asmuni = Asmuni();
 Asmuni.process()
