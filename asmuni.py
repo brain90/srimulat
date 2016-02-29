@@ -1,18 +1,25 @@
 import re
 import sys
+import subprocess
 from dateutil import parser
 
 class Asmuni(object):
 
     def __init__(self):
         self.chatFile = open(sys.argv[1], 'r')
-        self.cleanFile = open("cleanFile.txt","w")
+        self.cleanFile = open("srimulat.sql","w")
         self.currentNextLine = ""
         self.counter = 1
 
     def process(self):
-        header = "copy srimulat (date, sender, content) from stdin;\n"
-        self.write(header)
+        subprocess.call(["clear"])
+        ddl_header = "drop table if exists srimulat;\n" + \
+                     "create table srimulat " + \
+                     "(date timestamp, " + \
+                     "sender varchar,  " + \
+                     "content varchar);\n" + \
+                     "copy srimulat (date, sender, content) from stdin;\n"
+        self.write(ddl_header)
         lineBuffer = ""
         for line in self.chatFile:
             lineBuffer = self.lineCleaner(line)
@@ -25,7 +32,9 @@ class Asmuni(object):
         self.write("\.\n")
         self.cleanFile.close()
         self.chatFile.close()
-        print "\ndone"
+        print "\n\n[Done]\nDeploy srimulat.sql to your postgres,\n" + \
+              "Start playing with some sql inside ./sql directories.\n" + \
+              "Have Fun !\n"
 
     def write(self, cleanLine):
         self.cleanFile.write(cleanLine)
