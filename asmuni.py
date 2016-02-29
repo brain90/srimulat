@@ -1,3 +1,6 @@
+# Asmuni (Whatsapp Group Analyzer)
+# Author: Brain90
+
 import re
 import sys
 import subprocess
