@@ -1,8 +1,8 @@
 -- Frekuensi kata di semua posting
-SELECT word, count(*)
+SELECT left(word,30) as word, count(*)
 FROM ( 
   SELECT regexp_split_to_table(content, '\s') as word
   FROM srimulat
-) t
+) t 
 GROUP BY word order by 2 desc;
 

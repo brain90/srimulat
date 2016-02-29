@@ -1,5 +1,5 @@
 -- Frekuensi kata per member tertentu
-SELECT word, count(*)
+SELECT left(word,30) as word, count(*)
 FROM ( 
   SELECT regexp_split_to_table(target.content, '\s') as word
   FROM 

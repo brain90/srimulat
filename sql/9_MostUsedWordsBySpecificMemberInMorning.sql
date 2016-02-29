@@ -1,5 +1,5 @@
 -- Paling banyak diomongin member tertentu ketika pagi
-SELECT word, count(*)
+SELECT left(word, 30), count(*)
 FROM ( 
   SELECT regexp_split_to_table(target.content, '\s') as word
   FROM 
