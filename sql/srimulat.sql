@@ -138,5 +138,3 @@ from
     srimulat;
  
 -- member, max_posting_month, min_posting_month, avg_post_per_month
-
-
