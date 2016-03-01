@@ -5,7 +5,7 @@ Whatsapp group chat analyzer
 - Export whatsapp history
 - Summon asmuni
 ```
-$ python parser.py [WhatsAppBackupFile.txt]
+$ python asmuni.py [WhatsAppBackupFile.txt]
 
 #Example:
 $ python asmuni.py WhatsApp\ Chat\ With\ YourGroupName.txt
@@ -27,5 +27,5 @@ $ python asmuni.py WhatsApp\ Chat\ With\ YourGroupName.txt
 - Most used words by some member in the morning
 - Member who summon "someone" frequently
 - Top 10 Busiest Days
-- Content within top 1 busiest days
+- Show discussion within busiest days
 
