@@ -1,4 +1,4 @@
-# Asmuni (Whatsapp Group Analyzer)
+# Srimulat (Whatsapp Group Analyzer)
 # Author: Brain90
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,7 @@ import sys
 import subprocess
 from dateutil import parser
 
-class Asmuni(object):
+class Srimulat(object):
 
     def __init__(self):
         self.chatFile = open(sys.argv[1], 'r')
@@ -80,5 +80,5 @@ class Asmuni(object):
         return parser.parse(msg_date).strftime("%Y-%m-%d %H:%M") + "\t" + \
                sender + "\t" + cleanContent + "\n"
 
-Asmuni = Asmuni();
-Asmuni.process()
+Srimulat = Srimulat();
+Srimulat.process()

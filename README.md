@@ -1,16 +1,16 @@
-# Asmuni
+# Srimulat
 Whatsapp group chat analyzer
 
 ### Usage steps ###
 - Export whatsapp history
-- Summon asmuni
+- Summon srimulat
 ```
-$ python asmuni.py [WhatsAppBackupFile.txt]
+$ python srimulat.py [WhatsAppBackupFile.txt]
 
 #Example:
-$ python asmuni.py WhatsApp\ Chat\ With\ YourGroupName.txt
+$ python srimulat.py WhatsApp\ Chat\ With\ YourGroupName.txt
 ```
-- Asmuni will give you a file called "srimulat.sql"
+- srimulat will give you a file called "srimulat.sql"
 - Deploy those sql files to your postgres
 - Start playing with some sql inside ./sql directories
 - Have Fun !
