@@ -10,7 +10,7 @@ $ python srimulat.py [WhatsAppBackupFile.txt]
 #Example:
 $ python srimulat.py WhatsApp\ Chat\ With\ YourGroupName.txt
 ```
-- srimulat will give you a file called "srimulat.sql"
+- Srimulat will give you a file called "srimulat.sql"
 - Deploy those sql files to your postgres
 - Start playing with some sql inside ./sql directories
 - Have Fun !
