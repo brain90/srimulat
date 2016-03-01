@@ -33,7 +33,6 @@ $ python srimulat.py WhatsApp\ Chat\ With\ YourGroupName.txt
 ![srimulatfc.jpg](https://github.com/brain90/srimulat/blob/master/srimulatfc.jpg "https://upload.wikimedia.org/wikipedia/id/8/81/SRIMULATFC.jpg")
 
 ```
-SRIMULAT FC
 Top LeftToRight : Paul - Subur - Basuki - Pak Bendot - Nurbuat - Darsono - Tarzan 
 Bottom LeftToRight : Gepeng - Timbul - Sigit - Triman
 ```
