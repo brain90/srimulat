@@ -31,3 +31,8 @@ $ python srimulat.py WhatsApp\ Chat\ With\ YourGroupName.txt
 
 ### Long Live Srimulat ###
 ![srimulatfc.jpg](https://github.com/brain90/srimulat/blob/master/srimulatfc.jpg "https://upload.wikimedia.org/wikipedia/id/8/81/SRIMULATFC.jpg")
+
+```
+Top LeftToRight : Paul - Subur - Basuki - Pak Bendot - Nurbuat - Darsono - Tarzan 
+Bottom LeftToRight : Gepeng - Timbul - Sigit - Triman
+```
