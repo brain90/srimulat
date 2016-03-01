@@ -29,3 +29,5 @@ $ python srimulat.py WhatsApp\ Chat\ With\ YourGroupName.txt
 - Top 10 Busiest Days
 - Show discussion within busiest days
 
+### Long Live Srimulat ###
+![https://upload.wikimedia.org/wikipedia/id/8/81/SRIMULATFC.jpg](https://github.com/brain90/srimulat/blob/master/srimulatfc.jpg)
