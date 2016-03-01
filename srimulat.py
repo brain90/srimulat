@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import re, sys, subprocess
+import re, sys, subprocess, unicodedata
 from dateutil import parser
 
 class Srimulat(object):
@@ -60,8 +60,10 @@ class Srimulat(object):
         self.counter += 1
         
     def lineCleaner(self, line):
-        return line.strip().replace("\r",""). \
-               replace("<U+202C>","").replace("<U+202A>","")
+        return self.filterNonPrintable(line.strip().replace("\r",""))
+
+    def filterNonPrintable(self, str):
+        return unicodedata.normalize('NFKD', str.decode('utf-8')).encode('ascii','ignore')
 
     def nextLineIsRecord(self, lineBuffer):
         try:
@@ -80,12 +82,17 @@ class Srimulat(object):
     def recordParser(self, line):
         msg_date, sep, msg = line.partition(" - ")
         sender, sep, content = msg.partition(": ")
+
+        msgFromWhatsApp = ["added","removed","left","created","changed"]
+        if any(word in sender for word in msgFromWhatsApp) or sender.strip() == "": 
+             sender = "WhatsAppSystem"
+
         patternNonAscii = re.compile(r'[^\x00-\x7F]+')
         contentWithoutNonAscii = patternNonAscii.sub('',content)  
         cleanContent = ' '.join(contentWithoutNonAscii.split()) 
         if (cleanContent.strip() == ''): cleanContent = '\N'
         return parser.parse(msg_date).strftime("%Y-%m-%d %H:%M") + "\t" + \
-               sender + "\t" + cleanContent + "\n"
+               sender + "\t" + cleanContent.replace(u"\0","") + "\n"
 
 Srimulat = Srimulat();
 Srimulat.process()
