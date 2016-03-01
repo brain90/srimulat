@@ -30,4 +30,4 @@ $ python srimulat.py WhatsApp\ Chat\ With\ YourGroupName.txt
 - Show discussion within busiest days
 
 ### Long Live Srimulat ###
-![https://upload.wikimedia.org/wikipedia/id/8/81/SRIMULATFC.jpg](https://github.com/brain90/srimulat/blob/master/srimulatfc.jpg)
+![srimulatfc.jpg](https://github.com/brain90/srimulat/blob/master/srimulatfc.jpg "https://upload.wikimedia.org/wikipedia/id/8/81/SRIMULATFC.jpg")
