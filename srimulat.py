@@ -39,17 +39,21 @@ class Srimulat(object):
         for line in self.chatFile:
             lineBuffer = self.lineCleaner(line)
             if (self.isRecord(line)):
-                while (self.nextLineIsRecord() == False):
+                while (self.nextLineIsRecord(lineBuffer) == False):
                     lineBuffer += self.lineCleaner(self.currentNextLine)
                 self.write(self.recordParser(lineBuffer))
                 self.write(self.recordParser(self.lineCleaner(self.currentNextLine)))
             lineBuffer = ""
+        self.terminate()        
+
+    def terminate(self):
         self.write("\.\n")
         self.cleanFile.close()
         self.chatFile.close()
         print "\n\n[Done]\nDeploy srimulat.sql to your postgres,\n" + \
               "Start playing with some sql inside ./sql directories.\n" + \
               "Have Fun !\n"
+        sys.exit()
 
     def write(self, cleanLine):
         self.cleanFile.write(cleanLine)
@@ -58,10 +62,15 @@ class Srimulat(object):
         self.counter += 1
         
     def lineCleaner(self, line):
-        return line.strip().replace("\r","")
+        return line.strip().replace("\r",""). \
+               replace("<U+202C>","").replace("<U+202A>","")
 
-    def nextLineIsRecord(self):
-        self.currentNextLine = next(self.chatFile)
+    def nextLineIsRecord(self, lineBuffer):
+        try:
+            self.currentNextLine = next(self.chatFile)
+        except StopIteration:
+            self.write(self.recordParser(lineBuffer))
+            self.terminate()
         return self.isRecord(self.currentNextLine) 
         
     def isRecord(self, line):
