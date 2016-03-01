@@ -2,7 +2,7 @@
 Whatsapp group chat analyzer using python & postgres 
 
 ### Usage steps ###
-- (Export whatsapp history)[https://www.whatsapp.com/faq/en/android/23756533]
+- [Export whatsapp history](https://www.whatsapp.com/faq/en/android/23756533)
 - Summon srimulat
 ```
 $ python srimulat.py [WhatsAppBackupFile.txt]
