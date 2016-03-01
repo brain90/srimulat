@@ -18,7 +18,7 @@ $ python srimulat.py WhatsApp\ Chat\ With\ YourGroupName.txt
 ### Feature ###
 - Get member and total post
 - Age of group
-- Posted time frequency (midnight, morning, afternoon, evening, night)
+- Post time frequency (midnight, morning, afternoon, evening, night)
 - Count word frequency 
 - Count Some word frequency 
 - Word frequency by specific member
