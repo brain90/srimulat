@@ -29,6 +29,25 @@ $ python srimulat.py WhatsApp\ Chat\ With\ YourGroupName.txt
 - Top 10 Busiest Days
 - Show discussion within busiest days
 
+## Srimulat For Edu ###
+Gen Z student raised with social media culture. They use Whatsapp, telegram, 
+line, etc to interact with their friends, family, etc. Such tools are very close to their lifes.  
+Teacher can use srimulat to attract student into programming / rdbms concept.
+
+Some interesting problem to solve :
+
+_Beginner/Intermediate topic:_
+- Analyzing friends personality based on posted contents
+- Normalizing chat history tables (Normalization concept)
+- Convert some srimulat feature using normal table (Intro to crud / join concept) 
+- Enhance query result using graphical diagram (Descriptive statistics)
+- Found most active / most silent friends 
+- Found friends idle / busy day by aggregating their post (Data Aggregation)
+
+_Advance topic :__
+- Creating a word stemmer within posted content
+- Performance Tuning
+
 ### Long Live Srimulat ###
 ![srimulatfc.jpg](https://github.com/brain90/srimulat/blob/master/srimulatfc.jpg "https://upload.wikimedia.org/wikipedia/id/8/81/SRIMULATFC.jpg")
 
