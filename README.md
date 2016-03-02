@@ -30,7 +30,7 @@ $ python srimulat.py WhatsApp\ Chat\ With\ YourGroupName.txt
 - Show discussion within busiest days
 
 ## Educational Purposes ###
-Gen Z student raised with social media culture. They use whatsapp, telegram, line, etc to interact with their friends, family, etc. Such tools are very close to their lifes. By using any of it as an example, teacher can attract student into programming / rdbms concept more easily. Some interesting problem to solve :
+[Gen Z](https://en.wikipedia.org/wiki/Generation_Z) student raised with social media culture. They use whatsapp, telegram, line, etc to interact with their friends, family, etc. Such tools are very close to their lifes. By using any of it as an example, teacher can attract student into programming / rdbms concept more easily. Some interesting problem to solve :
 
 _Beginner/Intermediate topic:_
 - Analyze friends personality based on posted contents (Aggregation)
