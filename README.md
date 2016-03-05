@@ -38,7 +38,7 @@ _Beginner/Intermediate topic:_
 - Convert some srimulat feature using normal table (Intro to crud / join concept) 
 - Transform query result into graphical diagram (Descriptive statistics)
 - Found most active / most silent friends (Aggregation) 
-- Found friends idle / busy day by aggregating their post (Aggregation)
+- Find friends idle / busy day by aggregating their post (Aggregation)
 
 _Advance topic :_
 - Creating a word stemmer within posted content
