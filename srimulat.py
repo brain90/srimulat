@@ -14,7 +14,9 @@
 # limitations under the License.
 
 import re, sys, subprocess, unicodedata
+import psycopg2
 from dateutil import parser
+from StopWordRemover import StopWordRemover
 
 class Srimulat(object):
 
@@ -23,16 +25,11 @@ class Srimulat(object):
         self.cleanFile = open("srimulat.sql","w")
         self.currentNextLine = ""
         self.counter = 1
+        self.conn = psycopg2.connect("dbname=hris_8 user=hris")
+        self.cur = self.conn.cursor()
 
     def process(self):
         subprocess.call(["clear"])
-        ddl_header = "drop table if exists srimulat;\n" + \
-                     "create table srimulat " + \
-                     "(date timestamp, " + \
-                     "sender varchar,  " + \
-                     "content varchar);\n" + \
-                     "copy srimulat (date, sender, content) from stdin;\n"
-        self.write(ddl_header)
         lineBuffer = ""
         for line in self.chatFile:
             lineBuffer = self.lineCleaner(line)
@@ -45,19 +42,27 @@ class Srimulat(object):
         self.terminate()        
 
     def terminate(self):
-        self.write("\.\n")
         self.cleanFile.close()
         self.chatFile.close()
+        self.createTable()
+        self.loadContentToTable('srimulat.sql')
+        self.conn.commit()
         print "\n\n[Done]\nDeploy srimulat.sql to your postgres,\n" + \
               "Start playing with some sql inside ./sql directories.\n" + \
               "Have Fun !\n"
         sys.exit()
 
     def write(self, cleanLine):
+        self.printToStdOut(cleanLine, 'line')
         self.cleanFile.write(cleanLine)
-        sys.stdout.write("Processing %d line \r" % (self.counter))
-        sys.stdout.flush()
         self.counter += 1
+    
+    def printToStdOut(self, content, contentType):
+        if ("line" in contentType):
+            sys.stdout.write("Processing %d line \r" % (self.counter))
+        else:
+            sys.stdout.write(content)
+        sys.stdout.flush()
         
     def lineCleaner(self, line):
         return self.filterNonPrintable(line.strip().replace("\r",""))
@@ -91,8 +96,27 @@ class Srimulat(object):
         contentWithoutNonAscii = patternNonAscii.sub('',content)  
         cleanContent = ' '.join(contentWithoutNonAscii.split()) 
         if (cleanContent.strip() == ''): cleanContent = '\N'
-        return parser.parse(msg_date).strftime("%Y-%m-%d %H:%M") + "\t" + \
-               sender + "\t" + cleanContent.replace(u"\0","") + "\n"
 
-Srimulat = Srimulat();
+        StopWord = StopWordRemover()
+        return parser.parse(msg_date).strftime("%Y-%m-%d %H:%M") + "\t" + \
+               sender + "\t" + cleanContent.replace(u"\0","")  + "\t" + \
+               StopWord.remove(cleanContent.replace(u"\0","")) + "\n"
+
+
+    def createTable(self):
+        self.printToStdOut("processing table...","")
+        ddl = "drop table if exists srimulat; " + \
+              "create table if not exists srimulat " + \
+              "(date timestamp, " + \
+              "sender varchar,  " + \
+              "content varchar,  " + \
+              "content_clean varchar);"
+        self.cur.execute(ddl)
+        return True 
+    
+    def loadContentToTable(self, contentFile):
+        self.cur.copy_from(open(contentFile), 'srimulat', columns=('date', 'sender', 'content', 'content_clean'))        
+        return True
+
+Srimulat = Srimulat()
 Srimulat.process()
