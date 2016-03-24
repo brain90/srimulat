@@ -41,7 +41,7 @@ _Beginner/Intermediate topic:_
 - Find friends idle / busy day by aggregating their post (Aggregation)
 
 _Advance topic :_
-- Creating a word stemmer within posted content
+- Create word stemmer for content
 - Performance Tuning
 
 ### Long Live Srimulat ###
