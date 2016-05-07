@@ -26,13 +26,13 @@ class Srimulat(object):
 
     def process(self):
         subprocess.call(["clear"])
-        ddl_header = "drop table if exists srimulat;\n" + \
-                     "create table srimulat " + \
-                     "(date timestamp, " + \
-                     "sender varchar,  " + \
-                     "content varchar);\n" + \
-                     "copy srimulat (date, sender, content) from stdin;\n"
-        self.write(ddl_header)
+        #ddl_header = "drop table if exists srimulat;\n" + \
+        #             "create table srimulat " + \
+        #             "(date timestamp, " + \
+        #             "sender varchar,  " + \
+        #             "content varchar);\n" + \
+        #             "copy srimulat (date, sender, content) from stdin;\n"
+        #self.write(ddl_header)
         lineBuffer = ""
         for line in self.chatFile:
             lineBuffer = self.lineCleaner(line)
@@ -45,7 +45,7 @@ class Srimulat(object):
         self.terminate()        
 
     def terminate(self):
-        self.write("\.\n")
+        #self.write("\.\n")
         self.cleanFile.close()
         self.chatFile.close()
         print "\n\n[Done]\nDeploy srimulat.sql to your postgres,\n" + \
@@ -74,7 +74,7 @@ class Srimulat(object):
         return self.isRecord(self.currentNextLine) 
         
     def isRecord(self, line):
-        if (re.match('^(\d{1,2})[/.-](\d{1,2})[/.-](\d{4})',line) is not None):
+        if (re.match('^(\d{1,2})[/.-](\d{1,2})[/.-](\d{2,4})',line) is not None):
             return True
         else:
             return False
@@ -89,8 +89,8 @@ class Srimulat(object):
 
         patternNonAscii = re.compile(r'[^\x00-\x7F]+')
         contentWithoutNonAscii = patternNonAscii.sub('',content)  
-        cleanContent = ' '.join(contentWithoutNonAscii.split()) 
-        if (cleanContent.strip() == ''): cleanContent = '\N'
+        cleanContent = ' '.join(contentWithoutNonAscii.split()).replace('NULL','').strip()
+        if (not cleanContent or cleanContent is None): cleanContent = '\N'
         return parser.parse(msg_date).strftime("%Y-%m-%d %H:%M") + "\t" + \
                sender + "\t" + cleanContent.replace(u"\0","") + "\n"
 
