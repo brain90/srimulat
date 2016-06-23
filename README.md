@@ -6,9 +6,6 @@ Whatsapp group chat analyzer using python & postgres
 - Summon srimulat
 ```
 $ python srimulat.py [WhatsAppBackupFile.txt]
-
-#Example:
-$ python srimulat.py WhatsApp\ Chat\ With\ YourGroupName.txt
 ```
 - Srimulat will give you a file called "srimulat.sql"
 - Deploy those sql files to your postgres
