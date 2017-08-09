@@ -1,7 +1,7 @@
 # Srimulat
 Whatsapp group chat analyzer using python & postgres 
 
-### Usage steps ###
+### Installation ###
 - [Export whatsapp history](https://www.whatsapp.com/faq/en/android/23756533)
 - Summon srimulat
 ```
