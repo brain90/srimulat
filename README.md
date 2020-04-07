@@ -53,5 +53,5 @@ Bottom LeftToRight : Gepeng - Timbul - Sigit - Triman
 Srimulat are Teguh slamet rahardjo and Raden Ayu Srimulat trademark.
 https://id.wikipedia.org/wiki/Srimulat
 
-This work licensed in http://www.wtfpl.net/ 
+Licensed under the Apache License, Version 2.0 (the "License")
 ```
