@@ -48,3 +48,6 @@ _Advance topic :_
 Top LeftToRight : Paul - Subur - Basuki - Pak Bendot - Nurbuat - Darsono - Tarzan 
 Bottom LeftToRight : Gepeng - Timbul - Sigit - Triman
 ```
+### License ###
+Srimulat are Teguh slamet rahardjo and Raden Ayu Srimulat trademark.
+https://id.wikipedia.org/wiki/Srimulat
