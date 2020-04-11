@@ -4,7 +4,7 @@ FROM (
   SELECT regexp_split_to_table(target.content, '\s') as word
   FROM 
     (
-        select content from srimulat where sender ilike '%sudrajat%'
+        select content from srimulat where sender ilike '%haris%'
     ) target 
 ) t
 GROUP BY word order by 2 desc;

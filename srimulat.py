@@ -15,6 +15,7 @@
 
 import re, sys, subprocess, unicodedata
 from dateutil import parser
+from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 
 class Srimulat(object):
 
@@ -23,15 +24,17 @@ class Srimulat(object):
         self.cleanFile = open("srimulat.sql","w")
         self.currentNextLine = ""
         self.counter = 1
+        factory = StemmerFactory()
+        self.stemmer = factory.create_stemmer()
 
     def process(self):
         subprocess.call(["clear"])
         ddl_header = "drop table if exists srimulat;\n" + \
-                     "create table srimulat " + \
-                     "(date timestamp, " + \
-                     "sender varchar,  " + \
-                     "content varchar);\n" + \
-                     "copy srimulat (date, sender, content) from stdin;\n"
+                "create table srimulat " + \
+                "(date timestamp, " + \
+                "sender varchar,  " + \
+                "content varchar);\n" + \
+                "copy srimulat (date, sender, content) from stdin;\n"
         self.write(ddl_header)
         lineBuffer = ""
         for line in self.chatFile:
@@ -49,8 +52,8 @@ class Srimulat(object):
         self.cleanFile.close()
         self.chatFile.close()
         print "\n\n[Done]\nDeploy srimulat.sql to your postgres,\n" + \
-              "Start playing with some sql inside ./sql directories.\n" + \
-              "Have Fun !\n"
+                "Start playing with some sql inside ./sql directories.\n" + \
+                "Have Fun !\n"
         sys.exit()
 
     def write(self, cleanLine):
@@ -58,7 +61,7 @@ class Srimulat(object):
         sys.stdout.write("Processing %d line \r" % (self.counter))
         sys.stdout.flush()
         self.counter += 1
-        
+
     def lineCleaner(self, line):
         return self.filterNonPrintable(line.strip().replace("\r",""))
 
@@ -72,27 +75,47 @@ class Srimulat(object):
             self.write(self.recordParser(lineBuffer))
             self.terminate()
         return self.isRecord(self.currentNextLine) 
-        
+
     def isRecord(self, line):
-        if (re.match('^(\d{1,2})[/.-](\d{1,2})[/.-](\d{4})',line) is not None):
+        if (re.match('^(\d{1,2})[/.-](\d{1,2})[/.-](\d{1,2})',line) is not None):
             return True
         else:
             return False
 
     def recordParser(self, line):
+
         msg_date, sep, msg = line.partition(" - ")
         sender, sep, content = msg.partition(": ")
 
         msgFromWhatsApp = ["added","removed","left","created","changed"]
         if any(word in sender for word in msgFromWhatsApp) or sender.strip() == "": 
-             sender = "WhatsAppSystem"
+            sender = "WhatsAppSystem"
 
         patternNonAscii = re.compile(r'[^\x00-\x7F]+')
         contentWithoutNonAscii = patternNonAscii.sub('',content)  
         cleanContent = ' '.join(contentWithoutNonAscii.split()) 
         if (cleanContent.strip() == ''): cleanContent = '\N'
-        return parser.parse(msg_date).strftime("%Y-%m-%d %H:%M") + "\t" + \
-               sender + "\t" + cleanContent.replace(u"\0","") + "\n"
 
-Srimulat = Srimulat();
+        titimangsa = msg_date.split(' ')
+        tanggalRaw = titimangsa[0].split('/')
+        tanggal = '20'+(tanggalRaw[2]).replace(',','')  + '-' + tanggalRaw[0] + '-' + tanggalRaw[1];
+        jam = titimangsa[1].replace('.',':')
+        
+        url = self.extractUrl(cleanContent)
+        if url:
+            print url
+
+        return tanggal + ' ' + jam + "\t" + \
+                sender + "\t" + self.stemmer.stem(cleanContent.replace(u"\0","")) + "\n"
+
+        #return parser.parse(msg_date).strftime("%Y-%m-%d %H:%M") + "\t" + \
+                #       sender + "\t" + cleanContent.replace(u"\0","") + "\n"
+
+    def extractUrl(self, string): 
+        # findall() has been used  
+        # with valid conditions for urls in string 
+        url = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\), ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', string) 
+        return url 
+
+Srimulat = Srimulat()
 Srimulat.process()
