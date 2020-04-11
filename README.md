@@ -7,8 +7,8 @@ Whatsapp group chat analyzer using python & postgres
 ```
 $ python srimulat.py [WhatsAppBackupFile.txt]
 ```
-- Srimulat will give you a file called "srimulat.sql"
-- Deploy those sql files to your postgres
+- Srimulat will give you file called "srimulat.sql"
+- Deploy those sql into your postgres
 - Start playing with some sql inside ./sql directories
 - Have Fun !
 
@@ -47,4 +47,11 @@ _Advance topic :_
 ```
 Top LeftToRight : Paul - Subur - Basuki - Pak Bendot - Nurbuat - Darsono - Tarzan 
 Bottom LeftToRight : Gepeng - Timbul - Sigit - Triman
+```
+### License ###
+```
+Srimulat are Teguh slamet rahardjo and Raden Ayu Srimulat trademark.
+https://id.wikipedia.org/wiki/Srimulat
+
+Licensed under the Apache License, Version 2.0 (the "License")
 ```
